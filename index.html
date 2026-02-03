@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Hetsi 🌙</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at center, #2b2e4a, #0b0c1a);
+  color:#eef0ff;
+}
+
+/* Moon ripple background */
+.moon{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.06);
+  transform:translate(-50%,-50%);
+  animation:ripple 5s infinite ease-out;
+}
+@keyframes ripple{
+  0%{box-shadow:0 0 0 0 rgba(255,255,255,.25)}
+  100%{box-shadow:0 0 0 160px rgba(255,255,255,0)}
+}
+
+/* Screens */
+.screen{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+.screen.active{
+  display:flex;
+  flex-direction:column;
+}
+
+/* Titles */
+h1{
+  font-family:'Pacifico',cursive;
+  color:#f2f3ff;
+  text-shadow:0 0 14px rgba(255,255,255,.35);
+}
+p{
+  color:#d8dcff;
+  max-width:360px;
+  line-height:1.7;
+}
+
+/* Button */
+button{
+  margin-top:25px;
+  padding:12px 32px;
+  border:none;
+  border-radius:30px;
+  background:#6d7cff;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+}
+
+/* Stars (cards) */
+.star{
+  position:absolute;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 14px rgba(255,255,255,.9);
+  animation:pulse 2.5s infinite;
+  cursor:pointer;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.25)}
+  100%{transform:scale(1)}
+}
+
+/* Card note */
+.card{
+  position:absolute;
+  bottom:18%;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  opacity:0;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border-radius:22px;
+  padding:26px;
+  max-width:380px;
+  box-shadow:0 0 30px rgba(255,255,255,0.2);
+  transition:.6s ease;
+  pointer-events:none;
+}
+.card.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+
+/* Subtle grain */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+
+<!-- SCREEN 1 -->
+<div class="screen active" id="s1">
+  <h1>For Hetsi 🌙</h1>
+  <p>A quiet moment, just meant for you.</p>
+  <button onclick="go(2)">Tap to begin</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="screen" id="s2">
+
+  <!-- Stars -->
+  <div class="star" style="top:32%;left:45%" onclick="openCard(0)"></div>
+  <div class="star" style="top:28%;left:55%" onclick="openCard(1)"></div>
+  <div class="star" style="top:44%;left:58%" onclick="openCard(2)"></div>
+  <div class="star" style="top:46%;left:42%" onclick="openCard(3)"></div>
+
+  <!-- Card -->
+  <div class="card" id="card">
+    <p id="cardText"></p>
+    <button onclick="closeCard()">Close</button>
+  </div>
+
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen" id="s3">
+  <h1>Dear Hetsi, 🌙</h1>
+  <p>
+This is all I wanted to share — quietly and honestly.  
+Nothing to expect, nothing to ask for.  
+Just a small expression meant to make you smile.
+  </p>
+</div>
+
+<script>
+const cards=[
+  // CARD 1 — YOUR ORIGINAL LINE (UNCHANGED)
+  "When your lovely hairs blow in air, really you look like a princess, but you are a princess only.",
+
+  // CARD 2
+  "Your eyes and your smile carry a softness that feels genuine and warm.",
+
+  // CARD 3
+  "Your nature is kind and gentle, and being around you feels peaceful.",
+
+  // CARD 4 (SPECIAL LINE)
+  "When you blink your eyes, my heart gets stolen — infinity times."
+];
+
+function go(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+}
+
+function openCard(i){
+  const c=document.getElementById("card");
+  document.getElementById("cardText").innerText=cards[i];
+  c.classList.add("show");
+}
+
+function closeCard(){
+  document.getElementById("card").classList.remove("show");
+}
+</script>
+
+</body>
+</html>
